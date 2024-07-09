@@ -1,0 +1,14 @@
+release/dfchannel.o
+release/main.o
+release/df_gui_version_1.o
+release/qcustomplot.o
+release/qrc_bg-img.o
+release/qrc_cmps.o
+release/qrc_cms.o
+release/qrc_df_logo.o
+release/qrc_lab_logo.o
+release/qrc_lab_logo_1.o
+release/qrc_uni_logo.o
+release/moc_df_gui_version_1.o
+release/moc_dfchannel.o
+release/moc_qcustomplot.o

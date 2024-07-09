@@ -1,0 +1,14 @@
+debug/dfchannel.o
+debug/main.o
+debug/df_gui_version_1.o
+debug/qcustomplot.o
+debug/qrc_bg-img.o
+debug/qrc_cmps.o
+debug/qrc_cms.o
+debug/qrc_df_logo.o
+debug/qrc_lab_logo.o
+debug/qrc_lab_logo_1.o
+debug/qrc_uni_logo.o
+debug/moc_df_gui_version_1.o
+debug/moc_dfchannel.o
+debug/moc_qcustomplot.o
