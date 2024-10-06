@@ -7,12 +7,19 @@
 #include <QVector>
 #include <QUdpSocket>
 #include <dfchannel.h>
-#include <QtCharts/QPolarChart>
+//#include <QtCharts/QPolarChart>
 #include <QtCharts/QScatterSeries>
 #include <QtCharts/QValueAxis>
 #include <QtCharts/QCategoryAxis>
 #include <QtCharts/QLineSeries>
 #include <QElapsedTimer>
+#include <QtGui/QPixmap>
+#include <QtCharts/QSplineSeries>
+#include <QtCharts/QAreaSeries>
+
+
+
+
 
 
 QT_BEGIN_NAMESPACE
@@ -30,8 +37,10 @@ public:
     ~df_gui_version_1();
 
 private slots:
-
+    //qreal f(qreal theta);
+    //qreal integrateArea(qreal theta_start, qreal theta_end);
     void readDatagrams();
+    void readDatagrams2();
     void on_pushButton_4_clicked();
 
     void on_pushButton_5_clicked();
@@ -49,10 +58,16 @@ private slots:
 
     void on_comboBox_8_currentTextChanged(const QString &arg1);
 
+    void on_pushButton_16_clicked();
+
+    void on_pushButton_17_clicked();
+
+    void on_pushButton_12_clicked();
+
 private:
     Ui::df_gui_version_1 *ui;
-    DFChannel df_channels;
-    QUdpSocket *socket;
+    //DFChannel df_channels;
+    QUdpSocket *socket, *socket2;
     //QVector<double> xxData;
     //QVector<double> yyData;
 

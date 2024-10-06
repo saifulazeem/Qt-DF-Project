@@ -130,7 +130,15 @@ compiler_rcc_clean:
 	-$(DEL_FILE) debug\qrc_bg-img.cpp debug\qrc_cmps.cpp debug\qrc_cms.cpp debug\qrc_df_logo.cpp debug\qrc_lab_logo.cpp debug\qrc_lab_logo_1.cpp debug\qrc_uni_logo.cpp
 debug/qrc_bg-img.cpp: ../../bg-img.qrc \
 		../../../../QT/6.7.2/mingw_64/bin/rcc.exe \
-		../../../../jpgtopngconverter-com.jpg
+		../../../../map5.jpg \
+		../../../../maqps.jpg \
+		../../../../map2.jpg \
+		../../../../map4.jpg \
+		../../../../map3.jpg \
+		../../../../jpgtopngconverter-com.jpg \
+		../../df_images/uni_logo185x80.png \
+		../../df_images/map5.jpg \
+		../../df_images/file.png
 	G:\saif\QT\6.7.2\mingw_64\bin\rcc.exe -name bg-img --no-zstd ..\..\bg-img.qrc -o debug\qrc_bg-img.cpp
 
 debug/qrc_cmps.cpp: ../../cmps.qrc \
@@ -142,7 +150,8 @@ debug/qrc_cmps.cpp: ../../cmps.qrc \
 
 debug/qrc_cms.cpp: ../../cms.qrc \
 		../../../../QT/6.7.2/mingw_64/bin/rcc.exe \
-		../../../../file\ (3)\ (1).png
+		../../../../file\ (3)\ (1).png \
+		../../../../vite/images/maps.png
 	G:\saif\QT\6.7.2\mingw_64\bin\rcc.exe -name cms --no-zstd ..\..\cms.qrc -o debug\qrc_cms.cpp
 
 debug/qrc_df_logo.cpp: ../../df_logo.qrc \
@@ -153,16 +162,19 @@ debug/qrc_df_logo.cpp: ../../df_logo.qrc \
 
 debug/qrc_lab_logo.cpp: ../../lab_logo.qrc \
 		../../../../QT/6.7.2/mingw_64/bin/rcc.exe \
+		../../../../AEEL_\ (1).png \
 		../../../../Screenshot\ 2024-06-10\ 141838.jpg
 	G:\saif\QT\6.7.2\mingw_64\bin\rcc.exe -name lab_logo --no-zstd ..\..\lab_logo.qrc -o debug\qrc_lab_logo.cpp
 
 debug/qrc_lab_logo_1.cpp: ../../lab_logo_1.qrc \
 		../../../../QT/6.7.2/mingw_64/bin/rcc.exe \
+		../../../../AEEL_.png \
 		../../../../Screenshot\ 2024-06-10\ 142407.jpg
 	G:\saif\QT\6.7.2\mingw_64\bin\rcc.exe -name lab_logo_1 --no-zstd ..\..\lab_logo_1.qrc -o debug\qrc_lab_logo_1.cpp
 
 debug/qrc_uni_logo.cpp: ../../uni_logo.qrc \
 		../../../../QT/6.7.2/mingw_64/bin/rcc.exe \
+		../../../../uni_logo185x80.png \
 		../../../../uni_logo\ (1).png \
 		../../../../uni_logo\ (2).png \
 		../../../../uni_logo.svg
@@ -418,6 +430,12 @@ debug/moc_df_gui_version_1.cpp: ../../df_gui_version_1.h \
 		../../../../QT/6.7.2/mingw_64/include/QtCharts/QXYSeries \
 		../../../../QT/6.7.2/mingw_64/include/QtCore/QElapsedTimer \
 		../../../../QT/6.7.2/mingw_64/include/QtCore/QDebug \
+		../../../../QT/6.7.2/mingw_64/include/QtCharts/QSplineSeries \
+		../../../../QT/6.7.2/mingw_64/include/QtCharts/qsplineseries.h \
+		../../../../QT/6.7.2/mingw_64/include/QtCore/QPointF \
+		../../../../QT/6.7.2/mingw_64/include/QtGui/QPixmap \
+		../../../../QT/6.7.2/mingw_64/include/QtCharts/QAreaSeries \
+		../../../../QT/6.7.2/mingw_64/include/QtCharts/qareaseries.h \
 		debug/moc_predefs.h \
 		../../../../QT/6.7.2/mingw_64/bin/moc.exe
 	G:\saif\QT\6.7.2\mingw_64\bin\moc.exe $(DEFINES) --include G:/saif/DF_QT_GUI/DF_GUI_Version_1/build/Desktop_Qt_6_7_2_MinGW_64_bit-Debug/debug/moc_predefs.h -IG:/saif/QT/6.7.2/mingw_64/mkspecs/win32-g++ -IG:/saif/DF_QT_GUI/DF_GUI_Version_1 -IG:/saif/QT/6.7.2/mingw_64/include -IG:/saif/QT/6.7.2/mingw_64/include/QtCharts -IG:/saif/QT/6.7.2/mingw_64/include/QtOpenGLWidgets -IG:/saif/QT/6.7.2/mingw_64/include/QtPrintSupport -IG:/saif/QT/6.7.2/mingw_64/include/QtWidgets -IG:/saif/QT/6.7.2/mingw_64/include/QtOpenGL -IG:/saif/QT/6.7.2/mingw_64/include/QtGui -IG:/saif/QT/6.7.2/mingw_64/include/QtNetwork -IG:/saif/QT/6.7.2/mingw_64/include/QtCore -I. -IG:/saif/QT/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++ -IG:/saif/QT/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/x86_64-w64-mingw32 -IG:/saif/QT/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/backward -IG:/saif/QT/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include -IG:/saif/QT/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include-fixed -IG:/saif/QT/Tools/mingw1120_64/x86_64-w64-mingw32/include ..\..\df_gui_version_1.h -o debug\moc_df_gui_version_1.cpp
@@ -653,6 +671,9 @@ debug/moc_dfchannel.cpp: ../../dfchannel.h \
 		../../../../QT/6.7.2/mingw_64/include/QtCharts/QXYSeries \
 		../../../../QT/6.7.2/mingw_64/include/QtCore/QElapsedTimer \
 		../../../../QT/6.7.2/mingw_64/include/QtCore/QDebug \
+		../../../../QT/6.7.2/mingw_64/include/QtCharts/QSplineSeries \
+		../../../../QT/6.7.2/mingw_64/include/QtCharts/qsplineseries.h \
+		../../../../QT/6.7.2/mingw_64/include/QtCore/QPointF \
 		debug/moc_predefs.h \
 		../../../../QT/6.7.2/mingw_64/bin/moc.exe
 	G:\saif\QT\6.7.2\mingw_64\bin\moc.exe $(DEFINES) --include G:/saif/DF_QT_GUI/DF_GUI_Version_1/build/Desktop_Qt_6_7_2_MinGW_64_bit-Debug/debug/moc_predefs.h -IG:/saif/QT/6.7.2/mingw_64/mkspecs/win32-g++ -IG:/saif/DF_QT_GUI/DF_GUI_Version_1 -IG:/saif/QT/6.7.2/mingw_64/include -IG:/saif/QT/6.7.2/mingw_64/include/QtCharts -IG:/saif/QT/6.7.2/mingw_64/include/QtOpenGLWidgets -IG:/saif/QT/6.7.2/mingw_64/include/QtPrintSupport -IG:/saif/QT/6.7.2/mingw_64/include/QtWidgets -IG:/saif/QT/6.7.2/mingw_64/include/QtOpenGL -IG:/saif/QT/6.7.2/mingw_64/include/QtGui -IG:/saif/QT/6.7.2/mingw_64/include/QtNetwork -IG:/saif/QT/6.7.2/mingw_64/include/QtCore -I. -IG:/saif/QT/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++ -IG:/saif/QT/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/x86_64-w64-mingw32 -IG:/saif/QT/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/backward -IG:/saif/QT/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include -IG:/saif/QT/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include-fixed -IG:/saif/QT/Tools/mingw1120_64/x86_64-w64-mingw32/include ..\..\dfchannel.h -o debug\moc_dfchannel.cpp
@@ -2650,16 +2671,19 @@ debug/dfchannel.o: ../../dfchannel.cpp ../../dfchannel.h \
 		../../../../QT/6.7.2/mingw_64/include/QtCharts/QXYSeries \
 		../../../../QT/6.7.2/mingw_64/include/QtCore/QElapsedTimer \
 		../../../../QT/6.7.2/mingw_64/include/QtCore/QDebug \
+		../../../../QT/6.7.2/mingw_64/include/QtCharts/QSplineSeries \
+		../../../../QT/6.7.2/mingw_64/include/QtCharts/qsplineseries.h \
+		../../../../QT/6.7.2/mingw_64/include/QtCore/QPointF \
 		ui_dfchannel.h \
 		../../../../QT/6.7.2/mingw_64/include/QtWidgets/QApplication \
 		../../../../QT/6.7.2/mingw_64/include/QtWidgets/qapplication.h \
 		../../../../QT/6.7.2/mingw_64/include/QtWidgets/QFrame \
 		../../../../QT/6.7.2/mingw_64/include/QtWidgets/qframe.h \
-		../../../../QT/6.7.2/mingw_64/include/QtWidgets/QHBoxLayout \
-		../../../../QT/6.7.2/mingw_64/include/QtWidgets/qboxlayout.h \
+		../../../../QT/6.7.2/mingw_64/include/QtWidgets/QGridLayout \
+		../../../../QT/6.7.2/mingw_64/include/QtWidgets/qgridlayout.h \
 		../../../../QT/6.7.2/mingw_64/include/QtWidgets/qlayout.h \
 		../../../../QT/6.7.2/mingw_64/include/QtWidgets/qlayoutitem.h \
-		../../../../QT/6.7.2/mingw_64/include/QtWidgets/qgridlayout.h \
+		../../../../QT/6.7.2/mingw_64/include/QtWidgets/qboxlayout.h \
 		../../../../QT/6.7.2/mingw_64/include/QtWidgets/QLabel \
 		../../../../QT/6.7.2/mingw_64/include/QtWidgets/qlabel.h \
 		../../../../QT/6.7.2/mingw_64/include/QtGui/qpicture.h \
@@ -2991,7 +3015,6 @@ debug/dfchannel.o: ../../dfchannel.cpp ../../dfchannel.h \
 		../../../../QT/6.7.2/mingw_64/include/QtWidgets/qrhiwidget.h \
 		../../../../QT/6.7.2/mingw_64/include/QtWidgets/qscrollbar.h \
 		../../../../QT/6.7.2/mingw_64/include/QtWidgets/qscroller.h \
-		../../../../QT/6.7.2/mingw_64/include/QtCore/QPointF \
 		../../../../QT/6.7.2/mingw_64/include/QtWidgets/QScrollerProperties \
 		../../../../QT/6.7.2/mingw_64/include/QtWidgets/qscrollerproperties.h \
 		../../../../QT/6.7.2/mingw_64/include/QtCore/QScopedPointer \
@@ -3283,6 +3306,12 @@ debug/main.o: ../../main.cpp ../../df_gui_version_1.h \
 		../../../../QT/6.7.2/mingw_64/include/QtCharts/QXYSeries \
 		../../../../QT/6.7.2/mingw_64/include/QtCore/QElapsedTimer \
 		../../../../QT/6.7.2/mingw_64/include/QtCore/QDebug \
+		../../../../QT/6.7.2/mingw_64/include/QtCharts/QSplineSeries \
+		../../../../QT/6.7.2/mingw_64/include/QtCharts/qsplineseries.h \
+		../../../../QT/6.7.2/mingw_64/include/QtCore/QPointF \
+		../../../../QT/6.7.2/mingw_64/include/QtGui/QPixmap \
+		../../../../QT/6.7.2/mingw_64/include/QtCharts/QAreaSeries \
+		../../../../QT/6.7.2/mingw_64/include/QtCharts/qareaseries.h \
 		../../../../QT/6.7.2/mingw_64/include/QtWidgets/QApplication \
 		../../../../QT/6.7.2/mingw_64/include/QtWidgets/qapplication.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\main.o ..\..\main.cpp
@@ -3528,7 +3557,23 @@ debug/df_gui_version_1.o: ../../df_gui_version_1.cpp ../../df_gui_version_1.h \
 		../../../../QT/6.7.2/mingw_64/include/QtCharts/QXYSeries \
 		../../../../QT/6.7.2/mingw_64/include/QtCore/QElapsedTimer \
 		../../../../QT/6.7.2/mingw_64/include/QtCore/QDebug \
+		../../../../QT/6.7.2/mingw_64/include/QtCharts/QSplineSeries \
+		../../../../QT/6.7.2/mingw_64/include/QtCharts/qsplineseries.h \
+		../../../../QT/6.7.2/mingw_64/include/QtCore/QPointF \
+		../../../../QT/6.7.2/mingw_64/include/QtGui/QPixmap \
+		../../../../QT/6.7.2/mingw_64/include/QtCharts/QAreaSeries \
+		../../../../QT/6.7.2/mingw_64/include/QtCharts/qareaseries.h \
+		../../../../QT/6.7.2/mingw_64/include/QtCharts/qchartview.h \
+		../../../../QT/6.7.2/mingw_64/include/QtWidgets/QGraphicsView \
+		../../../../QT/6.7.2/mingw_64/include/QtWidgets/qgraphicsview.h \
+		../../../../QT/6.7.2/mingw_64/include/QtGui/qpainter.h \
+		../../../../QT/6.7.2/mingw_64/include/QtGui/qtextoption.h \
+		../../../../QT/6.7.2/mingw_64/include/QtWidgets/qscrollarea.h \
+		../../../../QT/6.7.2/mingw_64/include/QtWidgets/qabstractscrollarea.h \
+		../../../../QT/6.7.2/mingw_64/include/QtWidgets/qframe.h \
+		../../../../QT/6.7.2/mingw_64/include/QtWidgets/qgraphicsscene.h \
 		ui_df_gui_version_1.h \
+		../../../../QT/6.7.2/mingw_64/include/QtGui/QIcon \
 		../../../../QT/6.7.2/mingw_64/include/QtWidgets/QApplication \
 		../../../../QT/6.7.2/mingw_64/include/QtWidgets/qapplication.h \
 		../../../../QT/6.7.2/mingw_64/include/QtWidgets/QComboBox \
@@ -3543,16 +3588,13 @@ debug/df_gui_version_1.o: ../../df_gui_version_1.cpp ../../df_gui_version_1.h \
 		../../../../QT/6.7.2/mingw_64/include/QtWidgets/qstyle.h \
 		../../../../QT/6.7.2/mingw_64/include/QtWidgets/qtabbar.h \
 		../../../../QT/6.7.2/mingw_64/include/QtWidgets/qrubberband.h \
-		../../../../QT/6.7.2/mingw_64/include/QtWidgets/qframe.h \
 		../../../../QT/6.7.2/mingw_64/include/QtCore/qabstractitemmodel.h \
 		../../../../QT/6.7.2/mingw_64/include/QtWidgets/QFrame \
-		../../../../QT/6.7.2/mingw_64/include/QtWidgets/QGroupBox \
-		../../../../QT/6.7.2/mingw_64/include/QtWidgets/qgroupbox.h \
-		../../../../QT/6.7.2/mingw_64/include/QtWidgets/QHBoxLayout \
-		../../../../QT/6.7.2/mingw_64/include/QtWidgets/qboxlayout.h \
+		../../../../QT/6.7.2/mingw_64/include/QtWidgets/QGridLayout \
+		../../../../QT/6.7.2/mingw_64/include/QtWidgets/qgridlayout.h \
 		../../../../QT/6.7.2/mingw_64/include/QtWidgets/qlayout.h \
 		../../../../QT/6.7.2/mingw_64/include/QtWidgets/qlayoutitem.h \
-		../../../../QT/6.7.2/mingw_64/include/QtWidgets/qgridlayout.h \
+		../../../../QT/6.7.2/mingw_64/include/QtWidgets/qboxlayout.h \
 		../../../../QT/6.7.2/mingw_64/include/QtWidgets/QLabel \
 		../../../../QT/6.7.2/mingw_64/include/QtWidgets/qlabel.h \
 		../../../../QT/6.7.2/mingw_64/include/QtGui/qpicture.h \
@@ -3561,7 +3603,6 @@ debug/df_gui_version_1.o: ../../df_gui_version_1.cpp ../../df_gui_version_1.h \
 		../../../../QT/6.7.2/mingw_64/include/QtWidgets/qlineedit.h \
 		../../../../QT/6.7.2/mingw_64/include/QtGui/qtextcursor.h \
 		../../../../QT/6.7.2/mingw_64/include/QtGui/qtextformat.h \
-		../../../../QT/6.7.2/mingw_64/include/QtGui/qtextoption.h \
 		../../../../QT/6.7.2/mingw_64/include/QtWidgets/QMenuBar \
 		../../../../QT/6.7.2/mingw_64/include/QtWidgets/qmenubar.h \
 		../../../../QT/6.7.2/mingw_64/include/QtWidgets/qmenu.h \
@@ -3578,12 +3619,10 @@ debug/df_gui_version_1.o: ../../df_gui_version_1.cpp ../../df_gui_version_1.h \
 		../../../../QT/6.7.2/mingw_64/include/QtCore/qpointer.h \
 		../../../../QT/6.7.2/mingw_64/include/QtCore/QSharedPointer \
 		../../../../QT/6.7.2/mingw_64/include/QtGui/QPainter \
-		../../../../QT/6.7.2/mingw_64/include/QtGui/qpainter.h \
 		../../../../QT/6.7.2/mingw_64/include/QtGui/QPainterPath \
 		../../../../QT/6.7.2/mingw_64/include/QtGui/QPaintEvent \
 		../../../../QT/6.7.2/mingw_64/include/QtGui/QMouseEvent \
 		../../../../QT/6.7.2/mingw_64/include/QtGui/QWheelEvent \
-		../../../../QT/6.7.2/mingw_64/include/QtGui/QPixmap \
 		../../../../QT/6.7.2/mingw_64/include/QtCore/QString \
 		../../../../QT/6.7.2/mingw_64/include/QtCore/QDateTime \
 		../../../../QT/6.7.2/mingw_64/include/QtCore/qdatetime.h \
@@ -3802,7 +3841,6 @@ debug/df_gui_version_1.o: ../../df_gui_version_1.cpp ../../df_gui_version_1.h \
 		../../../../QT/6.7.2/mingw_64/include/QtWidgets/QtWidgets \
 		../../../../QT/6.7.2/mingw_64/include/QtWidgets/QtWidgetsDepends \
 		../../../../QT/6.7.2/mingw_64/include/QtWidgets/qabstractitemview.h \
-		../../../../QT/6.7.2/mingw_64/include/QtWidgets/qabstractscrollarea.h \
 		../../../../QT/6.7.2/mingw_64/include/QtWidgets/qaccessiblewidget.h \
 		../../../../QT/6.7.2/mingw_64/include/QtWidgets/qaction.h \
 		../../../../QT/6.7.2/mingw_64/include/QtGui/QAction \
@@ -3843,13 +3881,11 @@ debug/df_gui_version_1.o: ../../df_gui_version_1.cpp ../../df_gui_version_1.h \
 		../../../../QT/6.7.2/mingw_64/include/QtWidgets/qgraphicsitemanimation.h \
 		../../../../QT/6.7.2/mingw_64/include/QtWidgets/qgraphicslinearlayout.h \
 		../../../../QT/6.7.2/mingw_64/include/QtWidgets/qgraphicsproxywidget.h \
-		../../../../QT/6.7.2/mingw_64/include/QtWidgets/qgraphicsscene.h \
 		../../../../QT/6.7.2/mingw_64/include/QtWidgets/qgraphicssceneevent.h \
 		../../../../QT/6.7.2/mingw_64/include/QtWidgets/qgraphicstransform.h \
 		../../../../QT/6.7.2/mingw_64/include/QtGui/QVector3D \
 		../../../../QT/6.7.2/mingw_64/include/QtGui/QMatrix4x4 \
-		../../../../QT/6.7.2/mingw_64/include/QtWidgets/qgraphicsview.h \
-		../../../../QT/6.7.2/mingw_64/include/QtWidgets/qscrollarea.h \
+		../../../../QT/6.7.2/mingw_64/include/QtWidgets/qgroupbox.h \
 		../../../../QT/6.7.2/mingw_64/include/QtWidgets/qheaderview.h \
 		../../../../QT/6.7.2/mingw_64/include/QtWidgets/qinputdialog.h \
 		../../../../QT/6.7.2/mingw_64/include/QtWidgets/qitemdelegate.h \
@@ -3870,7 +3906,6 @@ debug/df_gui_version_1.o: ../../df_gui_version_1.cpp ../../df_gui_version_1.h \
 		../../../../QT/6.7.2/mingw_64/include/QtWidgets/qrhiwidget.h \
 		../../../../QT/6.7.2/mingw_64/include/QtWidgets/qscrollbar.h \
 		../../../../QT/6.7.2/mingw_64/include/QtWidgets/qscroller.h \
-		../../../../QT/6.7.2/mingw_64/include/QtCore/QPointF \
 		../../../../QT/6.7.2/mingw_64/include/QtWidgets/QScrollerProperties \
 		../../../../QT/6.7.2/mingw_64/include/QtWidgets/qscrollerproperties.h \
 		../../../../QT/6.7.2/mingw_64/include/QtCore/QScopedPointer \
@@ -3915,9 +3950,7 @@ debug/df_gui_version_1.o: ../../df_gui_version_1.cpp ../../df_gui_version_1.h \
 		../../../../QT/6.7.2/mingw_64/include/QtPrintSupport/qprintpreviewdialog.h \
 		../../../../QT/6.7.2/mingw_64/include/QtPrintSupport/qprintpreviewwidget.h \
 		../../../../QT/6.7.2/mingw_64/include/QtPrintSupport/qtprintsupportversion.h \
-		../../../../QT/6.7.2/mingw_64/include/QtCore/QTimeZone \
-		../../../../QT/6.7.2/mingw_64/include/QtCharts/qchartview.h \
-		../../../../QT/6.7.2/mingw_64/include/QtWidgets/QGraphicsView
+		../../../../QT/6.7.2/mingw_64/include/QtCore/QTimeZone
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\df_gui_version_1.o ..\..\df_gui_version_1.cpp
 
 debug/qcustomplot.o: ../../qcustomplot.cpp ../../qcustomplot.h \

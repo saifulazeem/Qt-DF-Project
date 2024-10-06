@@ -3,6 +3,7 @@ QT += network
 QMAKE_CFLAGS += -Wa,-mbig-obj
 QMAKE_CXXFLAGS += -Wa,-mbig-obj
 QT += charts
+QT += widgets opengl
 
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets printsupport

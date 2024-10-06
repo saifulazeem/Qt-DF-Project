@@ -10,6 +10,8 @@
 #include <QtCharts/QLineSeries>
 #include <QElapsedTimer>
 #include <QDebug>
+#include <QtCharts/QSplineSeries>
+
 
 
 namespace Ui {
@@ -28,7 +30,7 @@ private slots:
 
 private:
     Ui::DFChannel *ui;
-    QUdpSocket *socket;
+    QUdpSocket *socket1;
 
 };
 

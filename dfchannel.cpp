@@ -2,6 +2,7 @@
 #include "ui_dfchannel.h"
 #include "qchartview.h"
 
+
 //#include <iostream>
 //#include <cmath>
 
@@ -18,10 +19,15 @@ QVector<double> yyData;
 double dbval1=100;
 // Global or class-level variables
 QPolarChart *polarChart;
-QScatterSeries *series;
+QLineSeries *series11;
+QScatterSeries *series1;
 QValueAxis *angularAxis;
 QValueAxis *radialAxis;
 QChartView *chartView;
+#include <QtCharts/QSplineSeries>
+QSplineSeries *series;
+
+QVector<QPointF> newData1; // New vector to store the highest point
 
 
 DFChannel::DFChannel(QWidget *parent)
@@ -226,7 +232,10 @@ DFChannel::DFChannel(QWidget *parent)
 
     polarChart = new QPolarChart();
    // polarChart->setTitle("Direction Finder");
-    polarChart->setBackgroundBrush(QBrush(Qt::black));
+    QColor rgbaColor(0, 0, 0); // Red color with 50% transparency
+    rgbaColor.setAlpha(100);
+    QBrush brush(rgbaColor);
+    polarChart->setBackgroundBrush(brush);
 
 
     // // Create angular and radial axes
@@ -239,7 +248,7 @@ DFChannel::DFChannel(QWidget *parent)
     polarChart->addAxis(angularAxis, QPolarChart::PolarOrientationAngular);
 
     radialAxis = new QValueAxis();
-    radialAxis->setTickCount(6);
+    radialAxis->setTickCount(10);
     radialAxis->setLabelFormat("%.1f");
     radialAxis->setRange(0, 256); // Example range, can be adjusted
     radialAxis->setLabelsColor(Qt::white);
@@ -247,24 +256,40 @@ DFChannel::DFChannel(QWidget *parent)
     polarChart->addAxis(radialAxis,QPolarChart::PolarOrientationRadial);
 
     // // Create a scatter series to plot points in sector 7 (270 to 315 degrees)
-    series = new QScatterSeries();
+    //series = new QScatterSeries();
+    //series = new QLineSeries();
+    series = new QSplineSeries();
+    series->setPointsVisible(false);
     series->setMarkerSize(8);
     series->setName("Ploting Channel 7");
-    series->append(270, 205); // Example point (angle, radius)
-    series->append(280, 6);
-    series->append(290, 117);
-    series->append(300, 8);
-    series->append(310, 9);
-    series->append(290, 125);
-    series->append(290, 128);
-    series->append(290, 139);
+    series->append(45, 205); // Example point (angle, radius)
+    series->append(75, 150);
+    series->append(115, 50);
+    series->append(0, 0);
+    series->append(0, 0);
+    series->append(225, 50); // main lobe start
+    series->append(250, 100); // maib lobe mid
+    series->append(275, 50); // main lobe end
+    series->append(0, 0);
+    series->append(0, 0);
+    series->append(360,0);
+    series->append(15, 105); //back lobe
+    series->append(45, 205); //backlobe
+
+    // series->sortByAngle();
+
+    // // Set series properties
+    // series->setConnectPoints(true); // Enable line connections between points
+    // series->setWrapAround(true);
+
     QBrush markerBrush(Qt::green);
     series->setBrush(markerBrush);
     // // Set the outline color of the points to black
     QPen black_pen = *new QPen();
     black_pen = series->pen(); // Get current pen settings
     black_pen.setColor(Qt::white); // Set outline color to black
-    black_pen.setWidth(1); // Set outline width (optional)
+    //black_pen.brush()
+    black_pen.setWidth(2); // Set outline width (optional)
     series->setPen(black_pen); // Apply the updated pen to the series
 
 
@@ -277,37 +302,45 @@ DFChannel::DFChannel(QWidget *parent)
     // // Create a chart view with zooming enabled
     chartView = new QChartView(polarChart);
     chartView->setRenderHint(QPainter::Antialiasing);
-    chartView->setRubberBand(QChartView::RectangleRubberBand); // Enable zooming
 
-    chartView->setMinimumSize(200, 380);
+    QColor rgbaColor2(0, 0, 0); // Red color with 50% transparency
+    rgbaColor2.setAlpha(100);
+    QBrush brush2(rgbaColor2);
 
-    ui->horizontalLayout->addWidget(chartView);
+    chartView->setBackgroundBrush(brush2);
+
+    //chartView->setMinimumSize(200, 380);
+
+    ui->gridLayout_2->addWidget(chartView);
 
 
     //=====================================End Polar******************************************************************
 
 
 
-    socket = new QUdpSocket(this);
+    socket1 = new QUdpSocket(this);
     //udpSocket->bind(QHostAddress("http://"+hostid), portid); // Bind to the specified local host address and port 7
 
-    socket->bind(QHostAddress::LocalHost, 4021); // Bind to localhost on port 4021
+    socket1->bind(QHostAddress::LocalHost, 4021); // Bind to localhost on port 4021
     //ui->radioButton->setStyleSheet("QRadioButton::indicator {width: 15px; height: 15px;border-radius: 7px; background-color: #1bc43a; }");
-    connect(socket, &QUdpSocket::readyRead, this, &DFChannel::readDatagrams1);
+    connect(socket1, &QUdpSocket::readyRead, this, &DFChannel::readDatagrams1);
+
+
 }
 
 DFChannel::~DFChannel()
 {
     delete ui;
-    delete socket;
+    delete socket1;
 
 }
+
 
 
 void DFChannel::readDatagrams1() {
 
 
-    while (socket->hasPendingDatagrams()) {
+    while (socket1->hasPendingDatagrams()) {
         QElapsedTimer timer;
         series->clear();
         // Start the timer before the loop starts
@@ -316,12 +349,13 @@ void DFChannel::readDatagrams1() {
         yyData.clear();
 
 
+
         QByteArray datagram;
-        datagram.resize(socket->pendingDatagramSize());
+        datagram.resize(socket1->pendingDatagramSize());
         QHostAddress sender;
         quint16 senderPort;
 
-        socket->readDatagram(datagram.data(), datagram.size(), &sender, &senderPort);
+        socket1->readDatagram(datagram.data(), datagram.size(), &sender, &senderPort);
 
         // Ensure the size of the received data is a multiple of 4 bytes (size of int32_t)
         if (datagram.size() % sizeof(int32_t) != 0) {
@@ -353,6 +387,7 @@ void DFChannel::readDatagrams1() {
 
                 xxData.append(i-7);
                 yyData.append(intArray[i]);
+
                 //x_itr1=x_itr1+1;
 
                 xxData.reserve(numSamples1);
@@ -364,6 +399,8 @@ void DFChannel::readDatagrams1() {
 
             if(chnl_nbr==8){
                 float Qs=315.0;
+                QPointF highestPoint8;
+                qreal maxY = std::numeric_limits<qreal>::lowest();
 
                 ui->customplot_1->graph(0)->setData(xxData, yyData);
                 // Set plot labels and titles
@@ -410,16 +447,63 @@ void DFChannel::readDatagrams1() {
                 for(int z=0;z<yyData.size();++z){
                     newData.append(QPointF(detaa, qAbs(yyData[z])));
 
-                    qDebug() << "Q theta Values: " << detaa << " Y values "<<yyData[z];
+                    //qDebug() << "Q theta Values: " << detaa << " Y values "<<yyData[z];
 
                     // series->append(detaa,yyData[z]);
                     detaa=detaa+angle_to_add;
 
                 }
 
-                series->replace(newData);
+                for (const QPointF &point : newData) {
+                    if (point.y() > maxY) {
+                        maxY = point.y();
+                        highestPoint8 = point;
+                    }
+                }
+
+                // Store the highest point in newData1
+                newData1.append(highestPoint8);
+                float ypeak=(highestPoint8.y()+newData1.at(0).y())/2;
+                float xpeak=((360-highestPoint8.x())/2)+highestPoint8.x();
+                QPointF midangle(xpeak,highestPoint8.y());
+                qDebug() << " MID Value values ch 8 "<<midangle;
+
+                qDebug() << " Y high values ch 8 "<<highestPoint8;
+
+                newData1.append(midangle);
+
+                float xpeak2=((360-xpeak)/2)+xpeak;
+                QPointF midangle2(xpeak2,highestPoint8.y());
+                newData1.append(midangle2);
+
+
+                float xpeak3=((360-xpeak2)/2)+xpeak2;
+                QPointF midangle3(xpeak3,highestPoint8.y());
+                newData1.append(midangle3);
+
+                float xpeak4=((360-xpeak3)/2)+xpeak3;
+                QPointF midangle4(xpeak4,highestPoint8.y());
+                newData1.append(midangle4);
+
+                newData1.append(QPointF(360,ypeak));
+
+
+                newData1.append(QPointF(0, ypeak));
+                newData1.append(newData1.at(0));
+                qDebug() << "new Data 0  Values: " << newData1[0] << " NewData1 Size "<<newData1.size();
+
+
+
+                series->replace(newData1);
+                newData1.clear();
+                //series->append(newData1);
+                polarChart->update();
+                chartView->update();
 
                 newData.clear();
+                //highestPoint8.isNull();
+                //series->clear();
+
                 //polar ploting end
 
 
@@ -428,6 +512,8 @@ void DFChannel::readDatagrams1() {
             if(chnl_nbr==1){
 
                 float Qs=0.0;
+                QPointF highestPoint;
+                qreal maxY = std::numeric_limits<qreal>::lowest();
 
 
                 ui->customplot_2->graph(0)->setData(xxData, yyData);
@@ -476,14 +562,28 @@ void DFChannel::readDatagrams1() {
                 for(int z=0;z<yyData.size();++z){
                     newData.append(QPointF(detaa, qAbs(yyData[z])));
 
-                    qDebug() << "Q theta Values: " << detaa << " Y values "<<yyData[z];
+                    //qDebug() << "Q theta Values: " << detaa << " Y values "<<yyData[z];
 
                     // series->append(detaa,yyData[z]);
                     detaa=detaa+angle_to_add;
 
                 }
 
-                series->replace(newData);
+
+                for (const QPointF &point : newData) {
+                    if (point.y() > maxY) {
+                        maxY = point.y();
+                        highestPoint = point;
+                    }
+                }
+
+                // Store the highest point in newData1
+                newData1.append(highestPoint);
+                //qDebug() << "new Data1 0  Values: " << newData1[0] << " Y high values "<<highestPoint;
+                qDebug() << " Y high values ch 1 "<<highestPoint;
+
+
+                //series->replace(newData);
                 newData.clear();
                 //polar ploting end
 
@@ -495,6 +595,8 @@ void DFChannel::readDatagrams1() {
             }
             if(chnl_nbr==2){
                 float Qs=45.0;
+                QPointF highestPoint;
+                qreal maxY = std::numeric_limits<qreal>::lowest();
 
                 ui->customplot_3->graph(0)->setData(xxData, yyData);
                 // Set plot labels and titles
@@ -542,22 +644,37 @@ void DFChannel::readDatagrams1() {
                 for(int z=0;z<yyData.size();++z){
                     newData.append(QPointF(detaa, qAbs(yyData[z])));
 
-                    qDebug() << "Q theta Values: " << detaa << " Y values "<<yyData[z];
+                    //qDebug() << "Q theta Values: " << detaa << " Y values "<<yyData[z];
 
                     // series->append(detaa,yyData[z]);
                     detaa=detaa+angle_to_add;
-                //polar plotting End
 
                 }
 
-                series->replace(newData);
+
+                for (const QPointF &point : newData) {
+                    if (point.y() > maxY) {
+                        maxY = point.y();
+                        highestPoint = point;
+                    }
+                }
+
+                // Store the highest point in newData1
+                newData1.append(highestPoint);
+                qDebug() << " Y high values ch 2 "<<highestPoint;
+
+                //series->replace(newData);
                 newData.clear();
+                //polar plotting End
+
 
 
 
             }
             if(chnl_nbr==7){
                 float Qs=270.0;
+                QPointF highestPoint;
+                qreal maxY = std::numeric_limits<qreal>::lowest();
 
                 ui->customplot_4->graph(0)->setData(xxData, yyData);
                 // Set plot labels and titles
@@ -604,16 +721,29 @@ void DFChannel::readDatagrams1() {
                 for(int z=0;z<yyData.size();++z){
                     newData.append(QPointF(detaa, qAbs(yyData[z])));
 
-                    qDebug() << "Q theta Values: " << detaa << " Y values "<<yyData[z];
+                    //qDebug() << "Q theta Values: " << detaa << " Y values "<<yyData[z];
 
                     // series->append(detaa,yyData[z]);
                     detaa=detaa+angle_to_add;
-                    //polar plotting End
 
                 }
 
-                series->replace(newData);
+
+                for (const QPointF &point : newData) {
+                    if (point.y() > maxY) {
+                        maxY = point.y();
+                        highestPoint = point;
+                    }
+                }
+
+                // Store the highest point in newData1
+                newData1.append(highestPoint);
+                qDebug() << " Y high values ch 7 "<<highestPoint;
+
+                //series->replace(newData);
                 newData.clear();
+                //polar plotting End
+
 
 
 
@@ -621,6 +751,9 @@ void DFChannel::readDatagrams1() {
             if(chnl_nbr==3){
 
                 float Qs=90.0;
+                QPointF highestPoint;
+                qreal maxY = std::numeric_limits<qreal>::lowest();
+
                 ui->customplot_5->graph(0)->setData(xxData, yyData);
                 // Set plot labels and titles
                 ui->customplot_5->xAxis->setLabel("Frequency (MHz/GHz)");
@@ -666,20 +799,35 @@ void DFChannel::readDatagrams1() {
                 for(int z=0;z<yyData.size();++z){
                     newData.append(QPointF(detaa, qAbs(yyData[z])));
 
-                    qDebug() << "Q theta Values: " << detaa << " Y values "<<yyData[z];
+                    //qDebug() << "Q theta Values: " << detaa << " Y values "<<yyData[z];
 
                     // series->append(detaa,yyData[z]);
                     detaa=detaa+angle_to_add;
-                    //polar plotting End
 
                 }
 
-                series->replace(newData);
+
+                for (const QPointF &point : newData) {
+                    if (point.y() > maxY) {
+                        maxY = point.y();
+                        highestPoint = point;
+                    }
+                }
+
+                // Store the highest point in newData1
+                newData1.append(highestPoint);
+                qDebug() << " Y high values ch 3 "<<highestPoint;
+
+                //series->replace(newData);
                 newData.clear();
+                //polar plotting End
+
 
             }
             if(chnl_nbr==5){
                 float Qs=180.0;
+                QPointF highestPoint;
+                qreal maxY = std::numeric_limits<qreal>::lowest();
 
                 ui->customplot_6->graph(0)->setData(xxData, yyData);
                 // Set plot labels and titles
@@ -726,16 +874,28 @@ void DFChannel::readDatagrams1() {
                 for(int z=0;z<yyData.size();++z){
                     newData.append(QPointF(detaa, qAbs(yyData[z])));
 
-                    qDebug() << "Q theta Values: " << detaa << " Y values "<<yyData[z];
+                    //qDebug() << "Q theta Values: " << detaa << " Y values "<<yyData[z];
 
                     // series->append(detaa,yyData[z]);
                     detaa=detaa+angle_to_add;
-                    //polar plotting End
 
                 }
 
-                series->replace(newData);
+
+                for (const QPointF &point : newData) {
+                    if (point.y() > maxY) {
+                        maxY = point.y();
+                        highestPoint = point;
+                    }
+                }
+
+                // Store the highest point in newData1
+                newData1.append(highestPoint);
+                qDebug() << " Y high values ch 5 "<<highestPoint;
+
+                //series->replace(newData);
                 newData.clear();
+                //polar plotting End
 
 
 
@@ -743,6 +903,8 @@ void DFChannel::readDatagrams1() {
             if(chnl_nbr==6){
 
                 float Qs=225.0;
+                QPointF highestPoint;
+                qreal maxY = std::numeric_limits<qreal>::lowest();
 
                 ui->customplot_7->graph(0)->setData(xxData, yyData);
                 // Set plot labels and titles
@@ -789,16 +951,28 @@ void DFChannel::readDatagrams1() {
                 for(int z=0;z<yyData.size();++z){
                     newData.append(QPointF(detaa, qAbs(yyData[z])));
 
-                    qDebug() << "Q theta Values: " << detaa << " Y values "<<yyData[z];
+                    //qDebug() << "Q theta Values: " << detaa << " Y values "<<yyData[z];
 
                     // series->append(detaa,yyData[z]);
                     detaa=detaa+angle_to_add;
-                    //polar plotting End
 
                 }
 
-                series->replace(newData);
+
+                for (const QPointF &point : newData) {
+                    if (point.y() > maxY) {
+                        maxY = point.y();
+                        highestPoint = point;
+                    }
+                }
+
+                // Store the highest point in newData1
+                newData1.append(highestPoint);
+                qDebug() << " Y high values ch 6 "<<highestPoint;
+
+                //series->replace(newData);
                 newData.clear();
+                //polar plotting End
 
 
 
@@ -806,6 +980,9 @@ void DFChannel::readDatagrams1() {
             if(chnl_nbr==4){
 
                 float Qs=135.0;
+                QPointF highestPoint;
+                qreal maxY = std::numeric_limits<qreal>::lowest();
+
                 //x_lop1=0;
                 ui->customplot_8->graph(0)->setData(xxData, yyData);
                 // Set plot labels and titles
@@ -851,28 +1028,39 @@ void DFChannel::readDatagrams1() {
                 for(int z=0;z<yyData.size();++z){
                     newData.append(QPointF(detaa, qAbs(yyData[z])));
 
-                    qDebug() << "Q theta Values: " << detaa << " Y values "<<yyData[z];
+                    //qDebug() << "Q theta Values: " << detaa << " Y values "<<yyData[z];
 
                     // series->append(detaa,yyData[z]);
                     detaa=detaa+angle_to_add;
-                    //polar plotting End
 
                 }
 
-                series->replace(newData);
+
+                for (const QPointF &point : newData) {
+                    if (point.y() > maxY) {
+                        maxY = point.y();
+                        highestPoint = point;
+                    }
+                }
+
+                // Store the highest point in newData1
+                newData1.append(highestPoint);
+                qDebug() << " Y high values ch 4 "<<highestPoint;
+
+                //series->replace(newData);
                 newData.clear();
+                //polar plotting End
 
             }
 
-            xxData.clear();
-            yyData.clear();
-
+            // xxData.clear();
+            // yyData.clear();
 
             // Calculate the elapsed time in milliseconds
-            qint64 elapsed = timer.nsecsElapsed() / 1000000; // Convert nanoseconds to milliseconds
+            //qint64 elapsed = timer.nsecsElapsed() / 1000000; // Convert nanoseconds to milliseconds
 
             // Output the elapsed time for one iteration of the loop
-            qDebug() << "Time taken for one Channel: " << elapsed << " milliseconds";
+            //qDebug() << "Time taken for one Channel: " << elapsed << " milliseconds";
             //x_lop1=x_lop1+1;
 
 
